@@ -292,7 +292,7 @@
             typingWrapper.className = 'flex items-start space-x-3';
             typingWrapper.innerHTML = `
                 <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
                 </div>
                 <div class="ai-bubble p-4 rounded-2xl flex items-center justify-center">
                     <div class="dot-flashing"></div>
@@ -310,35 +310,22 @@
         }
         
         async function callGeminiAPI(fullPrompt) {
-            const apiKey = ""; // API key is handled by the environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{
-                    parts: [{ text: fullPrompt }]
-                }]
-            };
-
-            const response = await fetch(apiUrl, {
+            const response = await fetch('/.netlify/functions/gemini', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: fullPrompt })
             });
 
             if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
+                console.error("Netlify function error:", await response.text());
+                throw new Error(`Function request failed with status ${response.status}`);
             }
 
             const result = await response.json();
-            const candidate = result.candidates?.[0];
-            
-            if (candidate && candidate.content?.parts?.[0]?.text) {
-                return candidate.content.parts[0].text;
-            } else {
-                throw new Error("Invalid response structure from API.");
+            if(result.error) {
+                throw new Error(result.error);
             }
+            return result.answer;
         }
 
         async function getRAGResponse(question) {
