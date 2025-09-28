@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InnerMonologue AI: Marcus Aurelius</title>
+    <title>Animus Engine: Marcus Aurelius</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -60,24 +60,31 @@
             0% { background-color: #9CA3AF; }
             50%, 100% { background-color: rgba(156, 163, 175, 0.2); }
         }
+        #waitlist-modal.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen p-4">
 
     <div class="w-full max-w-2xl h-[85vh] flex flex-col bg-gray-800 rounded-2xl shadow-2xl">
-        <header class="bg-gray-700 p-4 rounded-t-2xl border-b border-gray-600 flex items-center">
-            <div class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
+        <header class="bg-gray-700 p-4 rounded-t-2xl border-b border-gray-600 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold">Animus Engine</h1>
+                    <p class="text-sm text-gray-400">Conversing with Marcus Aurelius</p>
+                </div>
             </div>
-            <div>
-                <h1 class="text-xl font-bold">InnerMonologue AI</h1>
-                <p class="text-sm text-gray-400">Conversing with Marcus Aurelius</p>
-            </div>
+            <button id="create-own-btn" class="text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                Create Your Own
+            </button>
         </header>
 
         <main id="chat-window" class="flex-1 p-6 overflow-y-auto space-y-6">
-            <!-- Chat messages will be appended here -->
-             <div class="flex items-start space-x-3">
+            <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
                 </div>
@@ -105,6 +112,29 @@
         </footer>
     </div>
 
+    <!-- Waitlist Modal -->
+    <div id="waitlist-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div id="waitlist-card" class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md p-8 text-center relative">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h2 class="text-2xl font-bold mb-2">Build Your Own Legacy</h2>
+            <p class="text-gray-400 mb-6">This demo is an experiment. The true vision of Animus Engine is to provide a private, bespoke model of your own mind—your unique wisdom, preserved forever.</p>
+            <form id="waitlist-form">
+                <p class="text-sm text-gray-300 mb-4">Join the Founder's Circle waitlist to be notified when we launch.</p>
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <input id="email-input" type="email" placeholder="your.email@example.com" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white flex-grow" required>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-lg transition duration-300">Join Waitlist</button>
+                </div>
+            </form>
+            <div id="thank-you-message" class="hidden mt-6">
+                <h3 class="text-xl font-bold text-green-400">Thank You</h3>
+                <p class="text-gray-300">Your place is reserved. We will be in touch soon.</p>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         const meditationsCorpus = [
             "You have power over your mind — not outside events. Realize this, and you will find strength.",
@@ -130,6 +160,14 @@
         const userInput = document.getElementById('user-input');
         const summarizeBtn = document.getElementById('summarize-btn');
         const socraticBtn = document.getElementById('socratic-btn');
+
+        const createOwnBtn = document.getElementById('create-own-btn');
+        const waitlistModal = document.getElementById('waitlist-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const waitlistForm = document.getElementById('waitlist-form');
+        const waitlistCard = document.getElementById('waitlist-card');
+        const thankYouMessage = document.getElementById('thank-you-message');
+
 
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -194,6 +232,30 @@
             }
         });
 
+        // Waitlist Modal Logic
+        createOwnBtn.addEventListener('click', () => {
+            waitlistModal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            waitlistModal.classList.add('hidden');
+        });
+        
+        waitlistModal.addEventListener('click', (e) => {
+            if (e.target === waitlistModal) {
+                 waitlistModal.classList.add('hidden');
+            }
+        });
+
+        waitlistForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // In a real app, you would send the email to a server.
+            // For this demo, we just show a thank you message.
+            waitlistForm.classList.add('hidden');
+            thankYouMessage.classList.remove('hidden');
+        });
+
+
         function addMessageToChat(text, sender, role = 'user') {
             const messageWrapper = document.createElement('div');
             const bubble = document.createElement('div');
@@ -230,7 +292,7 @@
             typingWrapper.className = 'flex items-start space-x-3';
             typingWrapper.innerHTML = `
                 <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6m-6 4h6m-6-8a1 1 0 01-1-1V7a1 1 0 112 0v1a1 1 0 01-1 1z"/></svg>
                 </div>
                 <div class="ai-bubble p-4 rounded-2xl flex items-center justify-center">
                     <div class="dot-flashing"></div>
